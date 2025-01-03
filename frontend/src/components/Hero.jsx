@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function Hero() {
+    const navigate = useNavigate();
+    
     return (
         <div className="flex flex-col justify-center items-center text-white bg-black min-h-screen">
             <div className="flex flex-col justify-center items-center mb-6">
@@ -9,7 +13,9 @@ function Hero() {
                 <p className="text-cyan-700 text-5xl font-semibold">your action.</p>
             </div>
             <p className="mb-10">Be a part of the breakthrough and make someone's dream come true</p>
-            <button className="bg-cyan-700 text-white p-2 rounded-3xl w-40 mt-4 hover:bg-cyan-600 hover:shadow-lg transform hover:scale-105 transition duration-300">Donate Now</button>
+            <button className="bg-cyan-700 text-white p-2 rounded-3xl w-40 mt-4 hover:bg-cyan-600 hover:shadow-lg transform hover:scale-105 transition duration-300" 
+            onClick={()=> { navigate('/search')}}
+            >Donate Now</button>
         </div>
     );
 }
