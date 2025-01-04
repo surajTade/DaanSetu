@@ -4,11 +4,10 @@ import Hero2 from "../components/Hero2";
 import Navbar from "../components/Navbar";
 import Searchbox from "../components/Searchbox";
 
-function Dashboard  () {
+export default function Home  () {
   return (
     <div>
         <div className="navbar">
-        <Navbar />
         <Hero />
         <Hero2 />
         <Footer />
@@ -17,4 +16,4 @@ function Dashboard  () {
   );
 }
 
-export default Dashboard;
+

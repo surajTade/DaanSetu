@@ -1,21 +1,31 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Dashboard from './pages/Dashboard'
+import Home from './pages/Home'
 import Ngolist from './pages/Ngolist'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
+import Ngodata from './pages/Ngodata'
+import Navbar from './components/Navbar'
+
 
 function App() {
 
 
   return (
     <>
-        
+      
        <BrowserRouter>
+       <Navbar />
         <Routes>
           
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
           <Route path='/search' element={<Ngolist />} />
-          
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/about" element={<Ngodata />} />
+
         </Routes>
+      
       </BrowserRouter>
     </>
   )

@@ -7,7 +7,6 @@ function Ngolist (){
 
     return (
         <div>
-            <Navbar/>
             <Searchbox/>
             <Footer/>
         </div>

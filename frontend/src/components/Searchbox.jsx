@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ngos from "../assets/list.js"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -24,7 +25,10 @@ function Searchbox() {
         setCurrentPage((prevPage) => prevPage - 1);
     };
 
+    const navigate = useNavigate();
+
     return (
+
         <div className="bg-gray-100 p-4">
             <h1 className="flex flex-row justify-center text-5xl font-bold  m-[10vh]">Open&nbsp;<p className="text-cyan-700">Donations</p></h1>
             <div className="relative mr-[15vh] m-[5vh] ml-[15vh]">
@@ -41,6 +45,7 @@ function Searchbox() {
                     </svg>
                 </span>
             </div>
+            
             <div className="m-[10vh] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-9">
                 {currentItems.map((ngo) => (
                     <div
@@ -55,13 +60,13 @@ function Searchbox() {
                         <div className="p-4 h-[full]">
                             <div className="flex flex-row justify-between  items-center">
                                 <p className="text-gray-600 m-2 ml-0 text-base">{ngo.location}</p>
-                                <span className="text-green-600 text-base m-2 mr-0 font-bold">{ngo.requirement} requirements</span>
+                                <span className="text-green-600 text-base m-2 mr-0 font-bold">{ngo.requirement.length} requirements</span>
                             </div>
                             <p className="text-2xl font-bold m-2 ml-0">{ngo.name}</p>
                             
                             <p className="text-gray-700 m-4 ml-0 mt-1 text-xl line-clamp-2">{ngo.description}</p>
-                           
-                            <button className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "> Donate Now</button>
+                             
+                            <button onClick={(e) => navigate("/about?id=" + ngo.id) } className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "> Donate Now</button>
                            
                            
                         </div>
@@ -89,6 +94,7 @@ function Searchbox() {
                     </svg>
                 </button>
             </div>
+            
         </div>
     );
 }
