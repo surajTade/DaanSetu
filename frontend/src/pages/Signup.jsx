@@ -110,13 +110,73 @@ export default function Signup() {
                         </div>
 
                         <div>
-                            <label htmlFor="address" className="block text-sm/6 font-medium text-white">
-                                Address
+                            <label htmlFor="address1" className="block text-sm/6 font-medium text-white">
+                                Address 1
                             </label>
                             <div className="mt-2">
                                 <input
-                                    id="address"
-                                    name="address"
+                                    id="address1"
+                                    name="address1"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="address2" className="block text-sm/6 font-medium text-white">
+                                Address 2
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="address2"
+                                    name="address2"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="city" className="block text-sm/6 font-medium text-white">
+                                City/Town
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="city"
+                                    name="city"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="state" className="block text-sm/6 font-medium text-white">
+                                State
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="state"
+                                    name="state"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="pincode" className="block text-sm/6 font-medium text-white">
+                                Pincode
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="pincode"
+                                    name="pincode"
                                     type="text"
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -239,6 +299,88 @@ export default function Signup() {
                                         />
                                     </div>
                                 </div>
+
+                                <div>
+                                    <label htmlFor="address_proof" className="block text-sm/6 font-medium text-white">
+                                    Address proof: Utility bill/rental agreement (pdf*)
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="address_proof"
+                                            name="address_proof"
+                                            type="file"
+                                            required
+                                            accept='application/pdf'
+                                            className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="reg_docs" className="block text-sm/6 font-medium text-white">
+                                    Registration Certificate (pdf*)
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="reg_docs"
+                                            name="reg_docs"
+                                            type="file"
+                                            required
+                                            accept='application/pdf'
+                                            className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                <p  className="block text-lg font-medium text-white">Bank Details </p>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="account_no" className="block text-sm/6 font-medium text-white">
+                                        Bank Account Number :
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="account_no"
+                                            name="account_no"
+                                            type="text"
+                                            required
+                                            className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="ifsc_code" className="block text-sm/6 font-medium text-white">
+                                        IFSC Code :
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="ifsc_code"
+                                            name="ifsc_code"
+                                            type="text"
+                                            required
+                                            className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="upi_id" className="block text-sm/6 font-medium text-white">
+                                        UPI ID (optional)
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="upi_id"
+                                            name="upi_id"
+                                            type="text"
+                                            className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        />
+                                    </div>
+                                </div>
+
+
                             </>
                         )}
 
