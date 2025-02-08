@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import ngos from "../assets/list.js"
 import { useNavigate } from "react-router-dom";
+// import UserContext from "../context/UserContext.js";
 
 
+// const [userid, setUserid] = useState(0)
+// const {setUser} = useContext(UserContext)
+const handlesubmit = (e) => {
+    e.preventDefault()
+    setUser({userid})
+}
 
 function Searchbox() {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    
     const itemsPerPage = 6;
+    
 
     const filteredNgos = ngos.filter((ngo) =>
         ngo.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -28,7 +37,7 @@ function Searchbox() {
     const navigate = useNavigate();
 
     return (
-
+        
         <div className="bg-gray-100 p-4">
             <h1 className="flex flex-row justify-center text-5xl font-bold  m-[10vh]">Open&nbsp;<p className="text-cyan-700">Donations</p></h1>
             <div className="relative mr-[15vh] m-[5vh] ml-[15vh]">
@@ -66,12 +75,12 @@ function Searchbox() {
                             
                             <p className="text-gray-700 m-4 ml-0 mt-1 text-xl line-clamp-2">{ngo.description}</p>
                              
-                            <button onClick={(e) => navigate("/about?id=" + ngo.id) } className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "> Donate Now</button>
+                            <button onClick={(e) =>{ navigate("/about?id=" + ngo.id) } } className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "> Donate Now</button>
                            
                            
                         </div>
                     </div>
-                ))}
+                )   )}
             </div>
             <div className="flex justify-center my-4">
                 <button
@@ -96,7 +105,9 @@ function Searchbox() {
             </div>
             
         </div>
+        
     );
+    
 }
 
 export default Searchbox;

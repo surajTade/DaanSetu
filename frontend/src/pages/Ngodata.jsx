@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useSearchParams } from 'react-router-dom';
 import ngos from "../assets/list.js"
+// import UserContext from "../context/UserContext.js";
+
 
 
 const Ngodata = () => {
  
+  // const {user} = useContext(UserContext)
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
   const [selected, setSelected] = React.useState(false);
@@ -22,6 +25,8 @@ const Ngodata = () => {
       }
     });
   };
+
+  // if(!user) return <div> pass valid input</div>
 
   return (
     <div>

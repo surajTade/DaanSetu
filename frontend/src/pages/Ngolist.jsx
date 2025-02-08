@@ -6,6 +6,7 @@ import Searchbox from "../components/Searchbox";
 function Ngolist (){
 
     return (
+        
         <div>
             <Searchbox/>
             <Footer/>
