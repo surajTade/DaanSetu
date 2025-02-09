@@ -35,4 +35,7 @@ To learn more about the technologies used in this project, check out the followi
 - [Tailwind CSS](https://tailwindcss.com/)
 - [ESLint](https://eslint.org/)
 
+## Setting up the backend
 
+- copy the content from the .env_example file to your .env file
+- Fill the fields with your firebase credentials
