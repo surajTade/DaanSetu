@@ -6,8 +6,8 @@ function Navbar () {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <nav className="navbar flex flex-row justify-start items-center bg-black text-white p-4">
+        <div className='flex flex-row justify-between  bg-black text-white p-4'>
+            <nav className="navbar flex flex-row justify-start items-center">
                 <img src={logo} alt="logo" className="h-14 m-4" />
                 
                 <ul className="flex flex-row space-x-5 ml-10">
@@ -17,6 +17,16 @@ function Navbar () {
                     <li className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">Profile</li>
                 </ul>
             </nav>
+
+            <div className='flex flex-row justify-evenly'>
+                <button onClick={() => navigate("/signin")} className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100">
+                Sign In
+                </button>
+
+                <button onClick={() => navigate("/signup")} className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100">
+                Sign Up
+                </button>
+            </div>
         </div>
     );
 }
