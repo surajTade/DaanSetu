@@ -18,5 +18,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const ngoCollection = collection(db, "ngo");
+const ngoRequirementsCollection = collection(db, "ngo-requirements");
 
-export { app, ngoCollection, firebaseConfig };
+export { app, ngoCollection, firebaseConfig, ngoRequirementsCollection };
