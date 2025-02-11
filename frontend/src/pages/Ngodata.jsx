@@ -52,7 +52,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Type of NGO:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.type_of_ngo}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
@@ -65,7 +65,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Date of Registration:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.dat_of_reg}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
@@ -78,7 +78,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">FCRA Number:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.fcra_num}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
@@ -91,7 +91,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Website:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.website_i}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
@@ -104,7 +104,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Phone Number:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.ph_num}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
@@ -117,7 +117,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Email:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.email_i}</span>
           </div>
 
           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[5vh]">
@@ -130,7 +130,7 @@ const Ngodata = () => {
               />
             </div>
             <strong className="ml-3 ">Address:&nbsp;</strong>{" "}
-            <span>To be added</span>
+            <span>{ngo.address_1}</span>
           </div>
         </div>
 
