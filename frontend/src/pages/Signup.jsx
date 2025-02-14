@@ -1,8 +1,87 @@
 import logo from '../assets/logo.png';
 import { useState } from 'react';
+import { auth, db } from "../db/firebase"; // Corrected import
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify"; // Assuming you're using react-toastify for toasts
 
 export default function Signup() {
-    const [userType, setUserType] = useState('Doner');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [reType, setReType] = useState("");
+    const [fname, setFname] = useState("");
+    const [lname, setLname] = useState("");
+    const [ph_num, setPh_Num] = useState("");
+    const [address1, setAddress1] = useState("");
+    const [address2, setAddress2] = useState("");
+    const [city_town, setCityTown] = useState("");
+    const [state, setState] = useState("");
+    const [pincode, setPincode] = useState("");
+    const [userType, setUserType] = useState("Doner");
+    const [ngoType, setNgoType] = useState("");
+    const [loading, setLoading] = useState(false);
+  
+    const handleRegister = async (e) => {
+      e.preventDefault();
+      console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("First Name:", fname);
+
+      setLoading(true); // Set loading state to true to disable submit button and show a loading spinner
+      
+      // Form validation checks
+      if (password !== reType) {
+        toast.error("Passwords do not match", { position: "bottom-center" });
+        setLoading(false);
+        return;
+      }
+      
+      if (!email || !password || !fname || !lname || !ph_num || !address1 || !city_town || !state || !pincode) {
+        toast.error("Please fill in all the required fields", { position: "bottom-center" });
+        setLoading(false);
+        return;
+      }
+  
+      // Basic email format validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        toast.error("Please enter a valid email address", { position: "bottom-center" });
+        setLoading(false);
+        return;
+      }
+  
+      try {
+        // Create user with Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+  
+        if (user) {
+          // Add user data to Firestore
+          await setDoc(doc(db, "Users", user.uid), {
+            email: user.email,
+            firstName: fname,
+            lastName: lname,
+            phoneNumber: ph_num,
+            address: {
+              address1,
+              address2,
+              city_town,
+              state,
+              pincode,
+            },
+            userType,
+            ngoType: userType === "NGO" ? ngoType : null, // Only set NGO type if user is an NGO
+          });
+  
+          toast.success("User Registered Successfully!", { position: "top-center" });
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error); // Log the entire error object for debugging
+        toast.error("Registration failed! Please try again.", { position: "bottom-center" });
+        setLoading(false);
+      }
+    };
 
     return (
         <div>
@@ -15,7 +94,7 @@ export default function Signup() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form action="#" method="POST" className="space-y-6">
+                    <form action="#" method="POST" className="space-y-6" onSubmit={handleRegister}>
                         <div>
                             <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
                                 First Name
@@ -25,6 +104,7 @@ export default function Signup() {
                                     id="first-name"
                                     name="first-name"
                                     type="text"
+                                    onChange={(e) => setFname(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -40,6 +120,7 @@ export default function Signup() {
                                     id="last-name"
                                     name="last-name"
                                     type="text"
+                                    onChange={(e) => setLname(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -55,6 +136,7 @@ export default function Signup() {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                     autoComplete="email"
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -71,6 +153,7 @@ export default function Signup() {
                                     id="phone"
                                     name="phone"
                                     type="tel"
+                                    onChange={(e) => setPh_Num(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -86,6 +169,7 @@ export default function Signup() {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                     autoComplete="new-password"
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -102,6 +186,7 @@ export default function Signup() {
                                     id="retype-password"
                                     name="retype-password"
                                     type="password"
+                                    onChange={(e) => setReType(e.target.value)}
                                     required
                                     autoComplete="new-password"
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -118,6 +203,7 @@ export default function Signup() {
                                     id="address1"
                                     name="address1"
                                     type="text"
+                                    onChange={(e) => setAddress1(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -133,6 +219,7 @@ export default function Signup() {
                                     id="address2"
                                     name="address2"
                                     type="text"
+                                    onChange={(e) => setAddress2(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -148,6 +235,7 @@ export default function Signup() {
                                     id="city"
                                     name="city"
                                     type="text"
+                                    onChange={(e) => setCityTown(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -163,6 +251,7 @@ export default function Signup() {
                                     id="state"
                                     name="state"
                                     type="text"
+                                    onChange={(e) => setState(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -178,6 +267,7 @@ export default function Signup() {
                                     id="pincode"
                                     name="pincode"
                                     type="text"
+                                    onChange={(e) => setPincode(e.target.value)}
                                     required
                                     className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
