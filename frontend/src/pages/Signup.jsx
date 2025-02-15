@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { auth, db } from "../db/firebase"; // Corrected import
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import { toast } from "react-toastify"; // Assuming you're using react-toastify for toasts
+
+
 
 export default function Signup() {
     const [email, setEmail] = useState("");
@@ -18,7 +19,6 @@ export default function Signup() {
     const [state, setState] = useState("");
     const [pincode, setPincode] = useState("");
     const [userType, setUserType] = useState("Doner");
-    const [ngoType, setNgoType] = useState("");
     const [loading, setLoading] = useState(false);
   
     const handleRegister = async (e) => {
@@ -57,7 +57,8 @@ export default function Signup() {
   
         if (user) {
           // Add user data to Firestore
-          await setDoc(doc(db, "Users", user.uid), {
+          await setDoc(doc(db, "Users", user.uid),
+           {
             email: user.email,
             firstName: fname,
             lastName: lname,
@@ -70,15 +71,14 @@ export default function Signup() {
               pincode,
             },
             userType,
-            ngoType: userType === "NGO" ? ngoType : null, // Only set NGO type if user is an NGO
+          
           });
-  
+          console.log("User Registered Successfully");
           toast.success("User Registered Successfully!", { position: "top-center" });
           setLoading(false);
         }
       } catch (error) {
         console.error(error); // Log the entire error object for debugging
-        toast.error("Registration failed! Please try again.", { position: "bottom-center" });
         setLoading(false);
       }
     };

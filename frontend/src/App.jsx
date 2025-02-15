@@ -6,8 +6,6 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Ngodata from "./pages/Ngodata";
 import Navbar from "./components/Navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the default styling
 
 
 function App() {

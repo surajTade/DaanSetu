@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../db/firebase"; // Corrected import path
-import { toast } from "react-toastify";
 import logo from "../assets/logo.png"; // Ensure this path is correct
 
 export default function Signin() {
