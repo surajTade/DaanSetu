@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { fetchNgoData } from "../db/ngoManager";
-// import ngos from "../assets/list.js";
 
 const Ngodata = () => {
   const [searchParams] = useSearchParams();

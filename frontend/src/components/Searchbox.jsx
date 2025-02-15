@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import ngos from "../assets/list.js";
 import { useNavigate } from "react-router-dom";
 import { fetchNgoData } from "../db/ngoManager";
 

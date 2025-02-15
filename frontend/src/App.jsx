@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Ngodata from "./pages/Ngodata";
 import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<Ngodata />} />
+          <Route path="/dashboard" element={<Dashboard/>} />
         </Routes>
       </BrowserRouter>
     </>
