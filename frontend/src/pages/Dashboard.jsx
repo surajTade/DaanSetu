@@ -10,11 +10,11 @@ export default function Dashboard() {
     const renderComponent = () => {
         switch (activeComponent) {
             case "About":
-                return <About userType="ngo" />;
+                return <About userType="" />;
             case "Donations":
                 return <Donations />;
             default:
-                return <About userType="ngo" />;
+                return <About userType="" />;
         }
     };
 
