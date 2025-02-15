@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
-import "firebase/firestore";
-import { collection, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; 
+import { getFirestore, collection } from "firebase/firestore";
 
-// web app's Firebase configuration
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -14,10 +14,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+const auth = getAuth(app); // ✅ Initialize auth properly
 const db = getFirestore(app);
 
+// Define collections AFTER db initialization
 const ngoCollection = collection(db, "ngo");
 const ngoRequirementsCollection = collection(db, "ngo-requirements");
 
-export { app, ngoCollection, firebaseConfig, ngoRequirementsCollection };
+// ✅ Export auth correctly
+export { app, auth, db, ngoCollection, ngoRequirementsCollection };
