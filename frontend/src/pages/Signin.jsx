@@ -1,114 +1,103 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../db/firebase"; // Corrected import path
-import logo from "../assets/logo.png"; // Ensure this path is correct
+import React, { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { app } from "../db/firebase";
 
-export default function Signin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+const SigninForm = () => {
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignin = async (e) => {
     e.preventDefault();
-    try {
-      // Attempt to sign in with Firebase
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
-      // Log the authenticated user object
-      console.log("User logged in:", userCredential.user); 
-      console.log("Login Sucessful");
-      toast.success("User logged in successfully", { position: "top-center" });
+    setError("");
 
-      // Navigate to Home page without refreshing
-        navigate("/Home"); 
-      
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+
+        // Store user type & email in localStorage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: user.email,
+            userType: userData.userType,
+            uid: user.uid,
+          })
+        );
+
+        // Redirect user based on their type
+        if (userData.userType === "ngo") {
+          navigate("/dashboard");
+        } else {
+          navigate("/dashboard");
+        }
+      }
     } catch (error) {
-      console.error("Login Failed: ", error.code, error.message);
-      toast.error(error.message, { position: "bottom-center" });
+      setError("Invalid email or password");
     }
   };
 
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-black text-white">
+      <div className="w-full max-w-lg p-8 bg-gray-900 rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-center text-yellow-400">
+          दान<span className="text-gray-400">$</span>ETU
+        </h2>
+        <p className="text-center text-gray-400">Sign In to your account</p>
 
-    return (
-      <div>
-        
-        <div className="flex min-h-screen flex-1 bg-black flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              alt="DaanSetu"
-              src={logo}
-              className="mx-auto h-10 w-auto"
-            />
-            <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-              Sign In to your account
-            </h2>
-          </div>
-  
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm/6 font-medium text-white">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    autoComplete="email"
-                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm/6 font-medium text-white">
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    autoComplete="current-password"
-                    className="block w-full rounded-md bg-black px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-  
-            <p className="mt-10 text-center text-sm/6 text-gray-500">
-              Not a member?{' '}
-              <a href="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Sign UP
-              </a>
-            </p>
-          </div>
-        </div>
+        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
+        <form onSubmit={handleSignin} className="mt-6 space-y-4">
+          <label>Email Address</label>
+          <input
+            type="email"
+            name="email"
+            required
+            className="input-field"
+            onChange={handleChange}
+          />
+
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            className="input-field"
+            onChange={handleChange}
+          />
+
+          <button
+            type="submit"
+            className="w-full mt-6 py-2 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-600 transition"
+          >
+            Sign In
+          </button>
+        </form>
       </div>
-    )
-  }
-  
+    </div>
+  );
+};
+
+export default SigninForm;
