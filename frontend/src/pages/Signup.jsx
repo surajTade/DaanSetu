@@ -270,6 +270,15 @@ const SignupForm = () => {
                 onChange={handleChange}
               />
 
+              <label>Date of Registration</label>
+              <input
+                type="date"
+                name="dateOfRegistration"
+                required
+                className="input-field"
+                onChange={handleChange}
+              />
+
               <label>Office Address</label>
               <input
                 type="text"

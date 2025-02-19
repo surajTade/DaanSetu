@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
 import { db } from "../db/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export default function Dashboard() {
   const [editMode, setEditMode] = useState(false);
   const [userType, setUserType] = useState(""); // Track user type (user/ngo)
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState(null); // Store user data
+  const [userId, setUserId] = useState(""); // Store user ID
 
   useEffect(() => {
     // Fetch user details from localStorage
     const storedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (storedUser && storedUser.email) {
+    if (storedUser && storedUser.uid) {
+      setUserId(storedUser.uid);
       setUserType(storedUser.userType);
       fetchUserData(storedUser.uid);
+    } else {
+      setLoading(false); // Stop loading if no user found
     }
   }, []);
 
@@ -22,7 +25,6 @@ export default function Dashboard() {
   const fetchUserData = async (uid) => {
     try {
       const userDoc = await getDoc(doc(db, "users", uid));
-
       if (userDoc.exists()) {
         setFormData(userDoc.data()); // Store user data in state
       } else {
@@ -36,7 +38,23 @@ export default function Dashboard() {
   };
 
   const handleEditClick = () => setEditMode(true);
-  const handleSaveClick = () => setEditMode(false);
+
+  const handleSaveClick = async () => {
+    if (userId && formData) {
+      try {
+        const userRef = doc(db, "users", userId);
+        await updateDoc(userRef, formData);
+        
+        // ✅ Show success alert after updating
+        alert("User data updated successfully!");
+  
+        setEditMode(false);
+      } catch (error) {
+        console.error("Error updating user data:", error);
+        alert("Failed to update data. Please try again.");
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,7 +99,7 @@ export default function Dashboard() {
                 <label className="font-bold text-black">Phone Number</label>
                 <input
                   type="text"
-                  name="phoneNumber"
+                  name="phone"
                   value={formData.phone || ""}
                   onChange={handleChange}
                   className="border p-2 w-full text-black rounded-md"
@@ -120,6 +138,19 @@ export default function Dashboard() {
               <h2 className="text-2xl font-bold pt-5 pb-4 text-black">
                 NGO Details
               </h2>
+
+              <div>
+                <label className="font-bold text-black">Name of NGO</label>
+                <input
+                  type="text"
+                  name="ngoName"
+                  value={formData.ngoName || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
               <div>
                 <label className="font-bold text-black">Type of NGO</label>
                 <input
@@ -132,13 +163,11 @@ export default function Dashboard() {
                 />
               </div>
               <div>
-                <label className="font-bold text-black">
-                  Date of Registration
-                </label>
+                <label className="font-bold text-black">Date of Registration</label>
                 <input
                   type="date"
-                  name="dateOfRegistration"
-                  value={formData.dateOfRegistration || ""}
+                  name="registrationDate"
+                  value={formData.registrationDate || ""}
                   onChange={handleChange}
                   className="border p-2 w-full text-black rounded-md"
                   disabled={!editMode}
@@ -150,6 +179,42 @@ export default function Dashboard() {
                   type="text"
                   name="officeAddress"
                   value={formData.officeAddress || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">FCRA Number</label>
+                <input
+                  type="text"
+                  name="fcraNumber"
+                  value={formData.fcraNumber || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">Bank Detail</label>
+                <input
+                  type="text"
+                  name="bankDetails"
+                  value={formData.bankDetails || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">UPI Id</label>
+                <input
+                  type="text"
+                  name="upiDetails"
+                  value={formData.upiDetails || ""}
                   onChange={handleChange}
                   className="border p-2 w-full text-black rounded-md"
                   disabled={!editMode}
