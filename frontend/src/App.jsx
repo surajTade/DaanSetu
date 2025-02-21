@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Ngolist from "./pages/Ngolist";
@@ -7,8 +7,15 @@ import Signup from "./pages/Signup";
 import Ngodata from "./pages/Ngodata";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
+import AuthGuard from "../AuthGuard";
 
 function App() {
+  const PrivateRoute = ({ children }) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    return user ? children : <Navigate to="/signin" replace />;
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -16,10 +23,31 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Ngolist />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/signin"
+            element={
+              <AuthGuard>
+                <Signin />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <AuthGuard>
+                <Signup />
+              </AuthGuard>
+            }
+          />
           <Route path="/about" element={<Ngodata />} />
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
