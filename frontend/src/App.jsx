@@ -8,6 +8,7 @@ import Ngodata from "./pages/Ngodata";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import AuthGuard from "../AuthGuard";
+import Requirements from "./components/Requirements";
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -48,6 +49,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/asd" element={<Requirements />} />
         </Routes>
       </BrowserRouter>
     </>

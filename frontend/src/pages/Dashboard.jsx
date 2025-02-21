@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import About from "../components/About";
 import Donations from "../components/Donations";
+import Requirements from "../components/Requirements";
 
 export default function Dashboard() {
     
@@ -13,6 +14,8 @@ export default function Dashboard() {
                 return <About userType="ngo" />;
             case "Donations":
                 return <Donations />;
+            case "Requirements":
+                return <Requirements />;
             default:
                 return <About userType="ngo" />;
         }
@@ -37,6 +40,13 @@ export default function Dashboard() {
                     
                 >
                     Donations
+                </button>
+                <button
+                    onClick={() => setActiveComponent("Requirements")}
+                    className={`w-full  border-2 font-bold   py-4 rounded-xl   m-2 p-2  ${activeComponent === "Requirements" ? "bg-cyan-700 text-white" : "border-cyan-700 hover:bg-cyan-100 text-cyan-700 bg-transparent"}`}
+                    
+                >
+                    Requirements
                 </button>
             </div>
             <div className="w-3/4 p-6 bg-gray-100">
