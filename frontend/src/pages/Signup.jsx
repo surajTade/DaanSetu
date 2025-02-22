@@ -29,10 +29,13 @@ const SignupForm = () => {
     websiteUrl: "",
     bankDetails: "",
     upiDetails: "",
+    ngo_description:"",
+
   });
 
   const [addressProof, setAddressProof] = useState(null);
   const [registrationCertificate, setRegistrationCertificate] = useState(null);
+  const [ngo_image, setNgoImage] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,6 +47,10 @@ const SignupForm = () => {
     } else if (e.target.name === "registrationCertificate") {
       setRegistrationCertificate(e.target.files[0]);
     }
+    else if (e.target.name === "ngo_image") {
+      setNgoImage(e.target.files[0]);
+    }
+
   };
 
   // Function to upload an image to ImgBB
@@ -85,12 +92,15 @@ const SignupForm = () => {
 
       let addressProofUrl = "";
       let registrationCertificateUrl = "";
+      let ngo_image_url="";
 
       if (userType === "ngo") {
         if (addressProof) {
           addressProofUrl = await uploadToImgBB(addressProof);
         }
-
+        if (ngo_image) {
+          ngo_image_url = await uploadToImgBB(ngo_image);
+        }
         if (registrationCertificate) {
           registrationCertificateUrl = await uploadToImgBB(
             registrationCertificate
@@ -103,8 +113,7 @@ const SignupForm = () => {
         ...formData,
         addressProofUrl: addressProof ? addressProofUrl : undefined,
         registrationCertificateUrl: registrationCertificate
-          ? registrationCertificateUrl
-          : undefined,
+          ? registrationCertificateUrl : undefined, ngo_image_url: ngo_image ? ngo_image_url : undefined,
       };
 
       // Remove empty fields from userData
@@ -273,7 +282,7 @@ const SignupForm = () => {
               <label>Date of Registration</label>
               <input
                 type="date"
-                name="dateOfRegistration"
+                name="registrationDate"
                 required
                 className="input-field"
                 onChange={handleChange}
@@ -295,7 +304,28 @@ const SignupForm = () => {
                 required
                 className="input-field"
                 onChange={handleChange}
+
               />
+               <label>Website URL</label>
+              <input
+                type="url"
+                name="websiteUrl"
+                required
+                className="input-field"
+                onChange={handleChange}
+                placeholder="https://example.com"
+              />
+
+              <label>Description</label>
+              <textarea
+                name="ngo_description"
+                required
+                className="input-field"
+                onChange={handleChange}
+                rows="4"
+                placeholder="Enter your description here..."
+              ></textarea>
+
 
               <label>Bank Details</label>
               <input
@@ -332,7 +362,17 @@ const SignupForm = () => {
                 className="input-field"
                 onChange={handleFileChange}
               />
+               <label>Ngo Image</label>
+              <input
+                type="file"
+                name="ngo_image"
+                required
+                className="input-field"
+                onChange={handleFileChange}
+              />
             </>
+            
+
           )}
 
           <button
