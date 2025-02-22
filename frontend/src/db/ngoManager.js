@@ -37,3 +37,6 @@ const fetchNgoData = async () => {
 };
 
 export { fetchNgoData };
+
+
+
