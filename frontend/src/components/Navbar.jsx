@@ -36,6 +36,7 @@ function Navbar() {
         </ul>
       </nav>
 
+      <div className="flex flex-row justify-evenly">
       {!localStorage.getItem("user") && (
         <div className="flex flex-row justify-evenly">
           <button
@@ -51,8 +52,17 @@ function Navbar() {
           >
             Sign Up
           </button>
+
+          
         </div>
       )}
+      <button
+            onClick={() => navigate("/")}
+            className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
+          >
+            Logout
+          </button>
+      </div>
     </div>
   );
 }
