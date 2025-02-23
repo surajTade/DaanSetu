@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; 
+import { getAuth } from "firebase/auth";
 import { getFirestore, collection } from "firebase/firestore";
-
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -18,7 +17,7 @@ const auth = getAuth(app); // ✅ Initialize auth properly
 const db = getFirestore(app);
 
 // Define collections AFTER db initialization
-const ngoCollection = collection(db, "ngo");
+const ngoCollection = collection(db, "users");
 const ngoRequirementsCollection = collection(db, "ngo-requirements");
 
 // ✅ Export auth correctly

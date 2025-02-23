@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchNgoData } from "../db/ngoManager";
 
 function Searchbox({ ngos }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -8,7 +7,7 @@ function Searchbox({ ngos }) {
   const itemsPerPage = 6;
 
   const filteredNgos = ngos.filter((ngo) =>
-    ngo.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ngo.ngoName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -63,7 +62,7 @@ function Searchbox({ ngos }) {
             className="bg-white  rounded-xl overflow-hidden border  border-gray-200"
           >
             <img
-              src={ngo.image}
+              src={ngo.ngo_image_url}
               alt={ngo.name}
               className="w-full h-[35vh] object-cover"
             />
@@ -83,9 +82,13 @@ function Searchbox({ ngos }) {
               </p>
 
               <button
-                onClick={(e) =>
-                  navigate("/about?id=" + index, { state: { ngoData: ngo } })
-                }
+                onClick={(e) => {
+                  if (!localStorage.getItem("user")) {
+                    navigate("/signin");
+                    return;
+                  }
+                  navigate("/about?id=" + index, { state: { ngoData: ngo } });
+                }}
                 className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "
               >
                 {" "}
