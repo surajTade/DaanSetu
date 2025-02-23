@@ -10,9 +10,10 @@ function Ngolist() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchNgoData();
+      const filteredData = data.filter((ngo) => ngo.requirement.length > 0);
 
-      if (data != null) {
-        setNgos(data);
+      if (filteredData != null) {
+        setNgos(filteredData);
       }
     };
 

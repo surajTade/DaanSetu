@@ -37,31 +37,34 @@ function Navbar() {
       </nav>
 
       <div className="flex flex-row justify-evenly">
-      {!localStorage.getItem("user") && (
-        <div className="flex flex-row justify-evenly">
-          <button
-            onClick={() => navigate("/signin")}
-            className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
-          >
-            Sign In
-          </button>
+        {!localStorage.getItem("user") && (
+          <div className="flex flex-row justify-evenly">
+            <button
+              onClick={() => navigate("/signin")}
+              className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
+            >
+              Sign In
+            </button>
 
+            <button
+              onClick={() => navigate("/signup")}
+              className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
+        {localStorage.getItem("user") && (
           <button
-            onClick={() => navigate("/signup")}
-            className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
-          >
-            Sign Up
-          </button>
-
-          
-        </div>
-      )}
-      <button
-            onClick={() => navigate("/")}
+            onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
             className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
           >
             Logout
           </button>
+        )}
       </div>
     </div>
   );

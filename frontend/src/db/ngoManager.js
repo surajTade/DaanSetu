@@ -4,11 +4,14 @@ import { ngoCollection, ngoRequirementsCollection } from "./firebase";
 const fetchNgoData = async () => {
   try {
     const ngosSnapshot = await getDocs(ngoCollection);
-    const ngosData = ngosSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      requirement: [],
-    }));
+
+    const ngosData = ngosSnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        requirement: [],
+      }))
+      .filter((doc) => doc.userType === "ngo");
 
     const requirementsSnapshot = await getDocs(ngoRequirementsCollection);
     const requirementsData = requirementsSnapshot.docs.map((doc) => ({
@@ -23,6 +26,7 @@ const fetchNgoData = async () => {
         const ngoIndex = ngosData.findIndex((ngo) => ngo.id === ngoId);
         if (ngoIndex !== -1) {
           ngosData[ngoIndex].requirement.push({
+            id: req.id,
             name: req.name,
             description: req.description,
             additionalInfo: req.additionalInfo,
@@ -30,6 +34,7 @@ const fetchNgoData = async () => {
         }
       }
     }
+
     return ngosData;
   } catch (error) {
     console.error("Error fetching NGO data:", error);
@@ -37,6 +42,3 @@ const fetchNgoData = async () => {
 };
 
 export { fetchNgoData };
-
-
-
