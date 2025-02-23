@@ -336,14 +336,7 @@ const SignupForm = () => {
                 onChange={handleChange}
               />
 
-              <label>IFSC Code</label>
-              <input
-                type="text"
-                name="bankDetails"
-                required
-                className="input-field"
-                onChange={handleChange}
-              />
+              
 
               <label>UPI Id</label>
               <input
