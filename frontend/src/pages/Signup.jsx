@@ -327,7 +327,7 @@ const SignupForm = () => {
               ></textarea>
 
 
-              <label>Bank Details</label>
+              <label>Bank Account No</label>
               <input
                 type="text"
                 name="bankDetails"
@@ -336,7 +336,16 @@ const SignupForm = () => {
                 onChange={handleChange}
               />
 
-              <label>UPI Details</label>
+              <label>IFSC Code</label>
+              <input
+                type="text"
+                name="bankDetails"
+                required
+                className="input-field"
+                onChange={handleChange}
+              />
+
+              <label>UPI Id</label>
               <input
                 type="text"
                 name="upiDetails"
