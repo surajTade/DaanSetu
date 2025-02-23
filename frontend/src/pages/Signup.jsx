@@ -30,6 +30,7 @@ const SignupForm = () => {
     bankDetails: "",
     upiDetails: "",
     ngo_description: "",
+    ngo_ph_num:"",
   });
 
   const [addressProof, setAddressProof] = useState(null);
@@ -141,22 +142,20 @@ const SignupForm = () => {
         <div className="flex justify-center my-6">
           <button
             type="button"
-            className={`w-1/2 py-2 rounded-l-lg ${
-              userType === "normal"
+            className={`w-1/2 py-2 rounded-l-lg ${userType === "normal"
                 ? "bg-yellow-500 text-black"
                 : "bg-gray-700 text-gray-300"
-            }`}
+              }`}
             onClick={() => setUserType("normal")}
           >
             Normal User
           </button>
           <button
             type="button"
-            className={`w-1/2 py-2 rounded-r-lg ${
-              userType === "ngo"
+            className={`w-1/2 py-2 rounded-r-lg ${userType === "ngo"
                 ? "bg-yellow-500 text-black"
                 : "bg-gray-700 text-gray-300"
-            }`}
+              }`}
             onClick={() => setUserType("ngo")}
           >
             NGO
@@ -304,6 +303,18 @@ const SignupForm = () => {
                 className="input-field"
                 onChange={handleChange}
               />
+
+              <label>NGO Phone Number</label>
+              <input
+                type="tel"
+                name="ngoPhoneNumber"
+                required
+                className="input-field"
+                onChange={handleChange}
+                pattern="[0-9]{10}"
+                placeholder="Enter 10-digit phone number"
+              />
+
               <label>Website URL</label>
               <input
                 type="url"
