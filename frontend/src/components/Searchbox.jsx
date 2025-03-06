@@ -63,19 +63,19 @@ function Searchbox({ ngos }) {
           >
             <img
               src={ngo.ngo_image_url}
-              alt={ngo.name}
+              alt={ngo.ngoName}
               className="w-full h-[35vh] object-cover"
             />
             <div className="p-4 h-[full]">
               <div className="flex flex-row justify-between  items-center">
                 <p className="text-gray-600 m-2 ml-0 text-base">
-                  {ngo.location}
+                  {ngo.address}
                 </p>
                 <span className="text-green-600 text-base m-2 mr-0 font-bold">
                   {ngo.requirement.length} requirements
                 </span>
               </div>
-              <p className="text-2xl font-bold m-2 ml-0">{ngo.name}</p>
+              <p className="text-2xl font-bold m-2 ml-0">{ngo.ngoName}</p>
 
               <p className="text-gray-700 m-4 ml-0 mt-1 text-xl line-clamp-2">
                 {ngo.description}
